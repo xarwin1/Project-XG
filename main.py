@@ -28,6 +28,12 @@ async def test(ctx):
 
 @client.command()
 
+async def iloveyou(ctx):
+    await ctx.send("putang ina mo")
+
+
+@client.command()
+
 async def poweroff(ctx):
     await ctx.send("Turning off...")
     await ctx.send("Goodbye")
