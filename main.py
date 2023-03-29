@@ -26,10 +26,7 @@ async def test(ctx):
     await ctx.send("Command is working papa")
 
 
-@client.command()
 
-async def iloveyou(ctx):
-    await ctx.send("putang ina mo")
 
 
 @client.command()
@@ -38,6 +35,11 @@ async def poweroff(ctx):
     await ctx.send("Turning off...")
     await ctx.send("Goodbye")
     await client.close()
+
+@client.command()
+
+async def xarwin(ctx):
+    await ctx.send("My papa")
 
 
 
