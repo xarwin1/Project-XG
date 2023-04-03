@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img width=200px height=200px src="https://imgur.com/a/oESOgVv" alt="Project logo"></a>
+ <img width=150px height=100px src="resources/p_logo.png" alt="Project logo"></a>
 </p>
 
 <h3 align="center">Project XG</h3>
@@ -8,15 +8,15 @@
 <div align="center">
 
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![GitHub Issues](https://img.shields.io/github/issues/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/pulls)
+[![GitHub Issues](https://img.shields.io/github/issues/xarwin1/Project-XG)](https://github.com/xarwin1/Project-XG/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/xarwin1/Project-XG)](https://github.com/kylelobo/The-Documentation-Compendium/pulls)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
 </div>
 
 ---
 
-<p align="center"> Few lines describing your project.
+<p align="center"> My discord bot project written in Python
     <br> 
 </p>
 
@@ -34,81 +34,81 @@
 
 ## 🧐 About <a name = "about"></a>
 
-Write about 1-2 paragraphs describing the purpose of your project.
+
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
+
 
 ### Prerequisites
 
-What things you need to install the software and how to install them.
+First thing you need to do is install python3
 
+### Linux
 ```
-Give examples
+sudo pacman -S install python3 // Arch Linux
 ```
+```
+sudo apt install python3 // Ubuntu/Debian
+```
+### Windows
+
+You can find the Windows installer on the offical [website](https://python.org)
+
+
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running.
 
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
+Download this repository (zip) and extract it, or do
 
 ```
-until finished
+git pull https://github.com/Project-XG
 ```
 
-End with an example of getting some data out of the system or using it for a little demo.
-
-## 🔧 Running the tests <a name = "tests"></a>
-
-Explain how to run the automated tests for this system.
-
-### Break down into end to end tests
-
-Explain what these tests test and why
+Install the discord.py package
 
 ```
-Give an example
+pip install discord
 ```
 
-### And coding style tests
-
-Explain what these tests test and why
-
+Next, create a file called creds.py in the extracted repo's directory and put this variable inside
 ```
-Give an example
+# replace YOURTOKEN with your discord app token
+login_token = "YOURTOKEN"
 ```
+Now you can run the bot by doing
+```
+python3 main.py
+```
+
+
+
 
 ## 🎈 Usage <a name="usage"></a>
 
-Add notes about how to use the system.
+The default command prefix is $. You can change it by simply editing the code. 
 
-## 🚀 Deployment <a name = "deployment"></a>
+Commands:
 
-Add additional notes about how to deploy this on a live system.
+$userinfo - prints the info of the user mentioned, it defaults to the one who send the command if no one was mentioned.
+
+$poweroff - turns off the bot from the discord app
+
+
+More commands to be added soon...
+
+
 
 ## ⛏️ Built Using <a name = "built_using"></a>
 
-- [MongoDB](https://www.mongodb.com/) - Database
-- [Express](https://expressjs.com/) - Server Framework
-- [VueJs](https://vuejs.org/) - Web Framework
-- [NodeJs](https://nodejs.org/en/) - Server Environment
+- [Python](https://www.python.org/)
+
 
 ## ✍️ Authors <a name = "authors"></a>
 
-- [@kylelobo](https://github.com/kylelobo) - Idea & Initial work
+- [@xarwin1](https://github.com/xarwin1) - Idea & Initial work
 
-See also the list of [contributors](https://github.com/kylelobo/The-Documentation-Compendium/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/xarwin1/Project-XG/contributors) who participated in this project.
 
-## 🎉 Acknowledgements <a name = "acknowledgement"></a>
 
-- Hat tip to anyone whose code was used
-- Inspiration
-- References
