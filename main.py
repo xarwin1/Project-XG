@@ -28,9 +28,9 @@ async def test(ctx):
 
 @client.command(aliases=["shutdown", "off"])
 async def poweroff(ctx):
-    await ctx.send("Turning off...")
-    await ctx.send("Goodbye")
-    await client.close()
+    await ctx.send("You can't do that.")
+    
+    
 
 @client.command()
 async def xarwin(ctx):
@@ -50,6 +50,20 @@ async def info(ctx, member:discord.Member=None):
     embed.add_field(name = "Joined Server", value = member.joined_at.strftime("%B %d, %Y"))
     
     await ctx.send(embed = embed)
+
+@client.command()
+async def server(ctx):
+    embed = discord.Embed(title="Server info", description=f"Here is the info of {ctx.guild.name} ", color=discord.Color.brand_green(), timestamp=ctx.message.created_at)
+    embed.set_thumbnail(url=ctx.guild.icon)
+    embed.add_field(name = "Server ID", value = ctx.guild.id)
+    embed.add_field(name = "Server Description", value = ctx.guild.description)
+    embed.add_field(name = "Server Owner", value = ctx.guild.owner)
+    embed.add_field(name = "Members", value = ctx.guild.member_count)
+    embed.add_field(name = "Roles", value = ctx.guild.roles)
+    embed.add_field(name = "Created at", value = ctx.guild.created_at.strftime("%B %d, %Y"))
+
+    await ctx.send(embed = embed)
+
     
 
 
