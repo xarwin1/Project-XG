@@ -1,13 +1,14 @@
 import creds
-import discord
-from discord.ext import commands
+import nextcord
+from nextcord import FFmpegPCMAudio
+from nextcord.ext import commands
 from colorama import Back, Fore, Style
 import time
 import platform
 
 
 
-client = commands.Bot(command_prefix= "$", intents=discord.Intents.all())
+client = commands.Bot(command_prefix= "$", intents=nextcord.Intents.all())
 
 
 
@@ -37,10 +38,10 @@ async def xarwin(ctx):
     await ctx.send("My papa")
 
 @client.command(aliases=['whois', 'userinfo'])
-async def info(ctx, member:discord.Member=None):
+async def info(ctx, member:nextcord.Member=None):
     if member == None:
         member = ctx.message.author
-    embed = discord.Embed(title="User Information", description=f"Here is the info of user {member.name}", color = discord.Color.brand_green(), timestamp = ctx.message.created_at)
+    embed = nextcord.Embed(title="User Information", description=f"Here is the info of user {member.name}", color = nextcord.Color.brand_green(), timestamp = ctx.message.created_at)
     embed.set_thumbnail(url = member.avatar)
     embed.add_field(name = "Name", value =f"{member.name}#{member.discriminator}")
     embed.add_field(name = "ID", value = member.id)
@@ -53,7 +54,7 @@ async def info(ctx, member:discord.Member=None):
 
 @client.command()
 async def server(ctx):
-    embed = discord.Embed(title="Server info", description=f"Here is the info of {ctx.guild.name} ", color=discord.Color.brand_green(), timestamp=ctx.message.created_at)
+    embed = nextcord.Embed(title="Server info", description=f"Here is the info of {ctx.guild.name} ", color=nextcord.Color.brand_green(), timestamp=ctx.message.created_at)
     embed.set_thumbnail(url=ctx.guild.icon)
     embed.add_field(name = "Server ID", value = ctx.guild.id)
     embed.add_field(name = "Server Description", value = ctx.guild.description)
@@ -64,8 +65,28 @@ async def server(ctx):
 
     await ctx.send(embed = embed)
 
+
+@client.command()
+async def join(ctx):
+    if (ctx.author.voice):
+        channel = ctx.message.author.voice.channel
+        voice = await channel.connect()
+
+        source = FFmpegPCMAudio('audio/Spectrum.mp3')
+        player = voice.play(source)
+    else:
+        await ctx.send("You're not in a voice channel.")
+
+@client.command()
+async def leave(ctx):
+    if (ctx.voice_client):
+        await ctx.guild.voice_client.disconnect()
+        await ctx.send("I left the voice channel")
+    else:
+        await ctx.send("I'm not in the voice channel")
+
     
 
 
 
-client.run(creds.login_token)
+client.run(creds.discord_token)
