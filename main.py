@@ -5,6 +5,8 @@ from nextcord.ext import commands
 from colorama import Back, Fore, Style
 import time
 import platform
+import glob
+import asyncio
 
 
 
@@ -66,16 +68,52 @@ async def server(ctx):
     await ctx.send(embed = embed)
 
 
+
 @client.command()
 async def join(ctx):
     if (ctx.author.voice):
         channel = ctx.message.author.voice.channel
-        voice = await channel.connect()
-
-        source = FFmpegPCMAudio('audio/Spectrum.mp3')
-        player = voice.play(source)
+        await channel.connect()
     else:
         await ctx.send("You're not in a voice channel.")
+
+@client.command()
+async def play(ctx):
+   
+   channel = ctx.message.author.voice.channel
+   voice = await channel.connect()
+   songs = glob.glob("C:/Users/xarwin/Documents/Project\ XG/resources/audio/Lex/*.mp3")
+   await ctx.send("This command is in work in progress state.")
+   for song in songs:
+        voice.play(nextcord.FFmpegPCMAudio(f"C:/Users/xarwin/Documents/Project\ XG/resources/audio/Lex/{song}"))
+        while voice.is_playing():
+            await asyncio.sleep(1)
+
+@client.command()
+async def pause(ctx):
+    voice = nextcord.utils.get(client.voice_clients,guild=ctx.guild)
+    if voice.is_playing():
+        voice.pause()
+    else:
+        await ctx.send("There is no playing audio right now.")
+
+@client.command()
+async def resume(ctx):
+    voice = nextcord.utils.get(client.voice_clients,guild=ctx.guild)
+    if voice.is_paused():
+        voice.resume()
+    else:
+        await ctx.send("There is no paused audio right now.")
+
+@client.command()
+async def stop(ctx):
+    voice = nextcord.utils.get(client.voice_clients,guild=ctx.guild)
+    if voice.is_playing() or voice.is_paused():
+        voice.stop()
+    else:
+        await ctx.send("There is no audio to stop")
+
+
 
 @client.command()
 async def leave(ctx):
@@ -84,6 +122,11 @@ async def leave(ctx):
         await ctx.send("I left the voice channel")
     else:
         await ctx.send("I'm not in the voice channel")
+
+
+
+
+
 
     
 
