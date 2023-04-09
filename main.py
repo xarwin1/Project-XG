@@ -1,164 +1,32 @@
-import creds
-import nextcord
-from nextcord import FFmpegPCMAudio
-from nextcord.ext import commands
+import discord
+
+from discord.ext import commands
 from colorama import Back, Fore, Style
 import time
-import platform
-import glob
-import asyncio
+import creds
 import os
 
-
-
-client = commands.Bot(command_prefix= "$", intents=nextcord.Intents.all())
-
-
+client = commands.Bot(command_prefix= "$", intents=discord.Intents.all())
 
 @client.event
 
 async def on_ready():
     prfx = (Back.BLACK + Fore.BLUE + time.strftime("%H:%M:%S GMT+8", time.gmtime()
     ) + Back.RESET + Fore.WHITE + Style.BRIGHT)
+    await client.change_presence(status=discord.Status.idle, activity=discord.Game('sex'))
     print(prfx + " Logged in as " + Fore.BLUE + client.user.name)
     print("Bot is now up!!!")
-    
-
-@client.command()
-async def test(ctx):
-    await ctx.send("Command is working papa")
 
 
+    command_cogs = []
 
-@client.command(aliases=["shutdown", "off"])
-async def poweroff(ctx):
-    await ctx.send("You can't do that.")
-    
-    
+    for filename in os.listdir('./cogs'):
+        if filename.endswith('.py'):
+            command_cogs.append("cogs." + filename[:-3])
 
-@client.command()
-async def xarwin(ctx):
-    await ctx.send("My papa")
-
-@client.command(aliases=['whois', 'userinfo'])
-async def info(ctx, member:nextcord.Member=None):
-    if member == None:
-        member = ctx.message.author
-    embed = nextcord.Embed(title="User Information", description=f"Here is the info of user {member.name}", color = nextcord.Color.brand_green(), timestamp = ctx.message.created_at)
-    embed.set_thumbnail(url = member.avatar)
-    embed.add_field(name = "Name", value =f"{member.name}#{member.discriminator}")
-    embed.add_field(name = "ID", value = member.id)
-    embed.add_field(name = "Server Name", value = member.display_name)
-    embed.add_field(name = "Status", value = member.status)
-    embed.add_field(name = "Account Created", value = member.created_at.strftime("%B %d, %Y"))
-    embed.add_field(name = "Joined Server", value = member.joined_at.strftime("%B %d, %Y"))
-    
-    await ctx.send(embed = embed)
-
-@client.command()
-async def server(ctx):
-    embed = nextcord.Embed(title="Server info", description=f"Here is the info of {ctx.guild.name} ", color=nextcord.Color.brand_green(), timestamp=ctx.message.created_at)
-    embed.set_thumbnail(url=ctx.guild.icon)
-    embed.add_field(name = "Server ID", value = ctx.guild.id)
-    embed.add_field(name = "Server Description", value = ctx.guild.description)
-    embed.add_field(name = "Server Owner", value = ctx.guild.owner)
-    embed.add_field(name = "Members", value = ctx.guild.member_count)
-    embed.add_field(name = "Roles", value = ctx.guild.roles)
-    embed.add_field(name = "Created at", value = ctx.guild.created_at.strftime("%B %d, %Y"))
-
-    await ctx.send(embed = embed)
-
-
-
-@client.command()
-async def join(ctx):
-    if (ctx.author.voice):
-        channel = ctx.message.author.voice.channel
-        await channel.connect()
-    else:
-        await ctx.send("You're not in a voice channel.")
-
-@client.command()
-async def alex(ctx):
-   
-   channel = ctx.message.author.voice.channel
-   voice = await channel.connect()
-   songs = glob.glob("/home/xarwin/projects/Project-XG/resources/audio/Lex/*.mp3")
-   
-   for song in songs:
-    voice.play(nextcord.FFmpegPCMAudio(song))
-    await ctx.send("Now playing: " + song.removeprefix("/home/xarwin/projects/Project-XG/resources/audio/Lex/"))
-    while voice.is_playing():
-        await asyncio.sleep(1)
-
-@client.command()
-async def dwight(ctx):
-   
-   channel = ctx.message.author.voice.channel
-   voice = await channel.connect()
-   songs = glob.glob("/home/xarwin/projects/Project-XG/resources/audio/chills/*.mp3")
-
-   
-   for song in songs:
-    voice.play(nextcord.FFmpegPCMAudio(song))
-    noprefix = song.removeprefix("/home/xarwin/projects/Project-XG/resources/audio/chills/")
-    nosuffix = noprefix.removesuffix(".mp3")
-    embed = nextcord.Embed(title="Now playing", description= nosuffix, color=nextcord.Color.brand_green(), timestamp = ctx.message.created_at)
-    await ctx.send(embed = embed)
-    while voice.is_playing():
-        await asyncio.sleep(1)
-
-@client.command(aliases=['ethan'])
-async def etthan(ctx):
-   
-   channel = ctx.message.author.voice.channel
-   voice = await channel.connect()
-   songs = glob.glob("/home/xarwin/projects/Project-XG/resources/audio/ugabuga/*.mp3")
-
-   for song in songs:
-    voice.play(nextcord.FFmpegPCMAudio(song))
-    noprefix = song.removeprefix("/home/xarwin/projects/Project-XG/resources/audio/ugabuga/")
-    nosuffix = noprefix.removesuffix(".mp3")
-    embed = nextcord.Embed(title="Now playing", description= nosuffix, color=nextcord.Color.brand_green(), timestamp = ctx.message.created_at)
-    await ctx.send(embed = embed)
-    while voice.is_playing():
-        await asyncio.sleep(1)
-     
-
-@client.command()
-async def pause(ctx):
-    voice = nextcord.utils.get(client.voice_clients,guild=ctx.guild)
-    if voice.is_playing():
-        voice.pause()
-    else:
-        await ctx.send("There is no playing audio right now.")
-
-
-@client.command()
-async def next(ctx):
-    voice = nextcord.utils.get(client.voice_clients,guild=ctx.guild)
-    if voice.is_playing() or voice.is_paused():
-        voice.stop()
-    else:
-        await ctx.send("There is no audio to stop")
-
-
-
-@client.command(aliases=['stop'])
-async def leave(ctx):
-    if (ctx.voice_client):
-        await ctx.guild.voice_client.disconnect()
-        await ctx.send("I left the voice channel")
-    else:
-        await ctx.send("I'm not in the voice channel")
-
-
-
-
-
-
-    
-
-
+    if __name__ == '__main__':
+        for cogs in command_cogs:
+            await client.load_extension(cogs)
+        
 
 client.run(creds.discord_token)
