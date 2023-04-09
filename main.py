@@ -7,6 +7,7 @@ import time
 import platform
 import glob
 import asyncio
+import os
 
 
 
@@ -82,12 +83,11 @@ async def play(ctx):
    
    channel = ctx.message.author.voice.channel
    voice = await channel.connect()
-   songs = glob.glob("C:/Users/xarwin/Documents/Project\ XG/resources/audio/Lex/*.mp3")
+   songs = glob.glob("/home/xarwin/projects/Project-XG/resources/audio/Lex/*.mp3")
    await ctx.send("This command is in work in progress state.")
    for song in songs:
-        voice.play(nextcord.FFmpegPCMAudio(f"C:/Users/xarwin/Documents/Project\ XG/resources/audio/Lex/{song}"))
-        while voice.is_playing():
-            await asyncio.sleep(1)
+    voice.play(nextcord.FFmpegPCMAudio(f"/home/xarwin/projects/Project-XG/resources/audio/Lex/{song}"))
+     
 
 @client.command()
 async def pause(ctx):
