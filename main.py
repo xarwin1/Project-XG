@@ -79,14 +79,50 @@ async def join(ctx):
         await ctx.send("You're not in a voice channel.")
 
 @client.command()
-async def play(ctx):
+async def alex(ctx):
    
    channel = ctx.message.author.voice.channel
    voice = await channel.connect()
    songs = glob.glob("/home/xarwin/projects/Project-XG/resources/audio/Lex/*.mp3")
-   await ctx.send("This command is in work in progress state.")
+   
    for song in songs:
-    voice.play(nextcord.FFmpegPCMAudio(f"/home/xarwin/projects/Project-XG/resources/audio/Lex/{song}"))
+    voice.play(nextcord.FFmpegPCMAudio(song))
+    await ctx.send("Now playing: " + song.removeprefix("/home/xarwin/projects/Project-XG/resources/audio/Lex/"))
+    while voice.is_playing():
+        await asyncio.sleep(1)
+
+@client.command()
+async def dwight(ctx):
+   
+   channel = ctx.message.author.voice.channel
+   voice = await channel.connect()
+   songs = glob.glob("/home/xarwin/projects/Project-XG/resources/audio/chills/*.mp3")
+
+   
+   for song in songs:
+    voice.play(nextcord.FFmpegPCMAudio(song))
+    noprefix = song.removeprefix("/home/xarwin/projects/Project-XG/resources/audio/chills/")
+    nosuffix = noprefix.removesuffix(".mp3")
+    embed = nextcord.Embed(title="Now playing", description= nosuffix, color=nextcord.Color.brand_green(), timestamp = ctx.message.created_at)
+    await ctx.send(embed = embed)
+    while voice.is_playing():
+        await asyncio.sleep(1)
+
+@client.command(aliases=['ethan'])
+async def etthan(ctx):
+   
+   channel = ctx.message.author.voice.channel
+   voice = await channel.connect()
+   songs = glob.glob("/home/xarwin/projects/Project-XG/resources/audio/ugabuga/*.mp3")
+
+   for song in songs:
+    voice.play(nextcord.FFmpegPCMAudio(song))
+    noprefix = song.removeprefix("/home/xarwin/projects/Project-XG/resources/audio/ugabuga/")
+    nosuffix = noprefix.removesuffix(".mp3")
+    embed = nextcord.Embed(title="Now playing", description= nosuffix, color=nextcord.Color.brand_green(), timestamp = ctx.message.created_at)
+    await ctx.send(embed = embed)
+    while voice.is_playing():
+        await asyncio.sleep(1)
      
 
 @client.command()
@@ -97,16 +133,9 @@ async def pause(ctx):
     else:
         await ctx.send("There is no playing audio right now.")
 
-@client.command()
-async def resume(ctx):
-    voice = nextcord.utils.get(client.voice_clients,guild=ctx.guild)
-    if voice.is_paused():
-        voice.resume()
-    else:
-        await ctx.send("There is no paused audio right now.")
 
 @client.command()
-async def stop(ctx):
+async def next(ctx):
     voice = nextcord.utils.get(client.voice_clients,guild=ctx.guild)
     if voice.is_playing() or voice.is_paused():
         voice.stop()
@@ -115,7 +144,7 @@ async def stop(ctx):
 
 
 
-@client.command()
+@client.command(aliases=['stop'])
 async def leave(ctx):
     if (ctx.voice_client):
         await ctx.guild.voice_client.disconnect()
