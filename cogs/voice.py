@@ -15,7 +15,7 @@ class voice(commands.Cog):
     
     @commands.command()
     async def next(self, ctx):
-        voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
+        voice = ctx.voice_client
         if voice.is_playing() or voice.is_paused():
             voice.stop()
         else:
