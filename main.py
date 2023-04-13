@@ -6,7 +6,7 @@ import time
 import creds
 import os
 
-client = commands.Bot(command_prefix= "$", intents=discord.Intents.all())
+client = commands.Bot(command_prefix= "sudo ", intents=discord.Intents.all())
 
 @client.event
 
