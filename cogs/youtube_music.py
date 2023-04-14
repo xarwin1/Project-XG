@@ -9,7 +9,7 @@ import yt_dlp
 ytdl_opts = {'format': 'bestaudio/best'}
 ytdl = yt_dlp.YoutubeDL(ytdl_opts)
 
-ffmpeg_options = {'options': '-vn'}
+ffmpeg_options = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options' : '-vn'}
 
 
 
